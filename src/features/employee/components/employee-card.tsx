@@ -1,37 +1,60 @@
-import {
-  AppAvatar,
-  AppButton,
-  AppDepartmentBadge,
-  AppPerformanceBadge,
-  AppStarRating,
-} from "@/shared/components";
-
+import { AppAvatar } from "@/shared/components/app-avatar";
+import { AppButton } from "@/shared/components/app-button";
+import { AppDepartmentBadge } from "@/shared/components/app-department-badge";
+import { AppStarRating } from "@/shared/components/app-star-rating";
 import { Card } from "@/shared/ui/card";
+import type { Employee } from "../types/employee";
+import { AppPerformanceBadge } from "@/shared/components";
 
-export default function EmployeeCard() {
+interface EmployeeCardProps {
+  employee: Employee;
+  onEdit: (id: string) => void;
+}
+
+function EmployeeHeader({ employee }: { employee: Employee }) {
   return (
-    <Card className="p-3">
+    <div className="flex justify-between items-center">
+      <AppAvatar size="lg" alt={employee.name} />
+      <AppPerformanceBadge performanceScore={employee.performanceScore} />
+    </div>
+  );
+}
+
+function EmployeeIdentity({ employee }: { employee: Employee }) {
+  return (
+    <div className="space-y-1">
+      <h2 className="text-lg font-semibold">{employee.name}</h2>
+      <p className="text-sm text-muted-foreground">{employee.role}</p>
+      <AppDepartmentBadge department={employee.department} />
+    </div>
+  );
+}
+
+function EmployeeStats({ employee }: { employee: Employee }) {
+  return (
+    <div className="space-y-2">
       <div className="flex justify-between items-center">
-        <AppAvatar />
-        <AppPerformanceBadge status="EXCEEDING" />
+        <p className="text-sm text-muted-foreground">Performance Score</p>
+        <p className="text-sm font-bold">{employee.performanceScore}/5</p>
       </div>
+      <AppStarRating total={employee.performanceScore} />
+    </div>
+  );
+}
 
-      <div className="space-y-1">
-        <h2 className="text-lg">Sarah Jenkins</h2>
-        <p className="text-sm text-[#64748B]">Lead Developer</p>
-        <AppDepartmentBadge department="Engineering" />
-      </div>
-
-      <div className="flex justify-between">
-        <p className="text-sm text-[#64748B]">Performance Score</p>
-        <p className="text-sm font-bold">95/100</p>
-      </div>
-
-      <div>
-        <AppStarRating total={5} />
-      </div>
-
-      <AppButton variant={"secondary"}>Edit Employee</AppButton>
+export default function EmployeeCard({ employee, onEdit }: EmployeeCardProps) {
+  return (
+    <Card className="p-3 ">
+      <EmployeeHeader employee={employee} />
+      <EmployeeIdentity employee={employee} />
+      <EmployeeStats employee={employee} />
+      <AppButton
+        variant="secondary"
+        className="w-full"
+        onClick={() => onEdit(employee.id)}
+      >
+        Edit Employee
+      </AppButton>
     </Card>
   );
 }
