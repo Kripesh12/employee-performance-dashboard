@@ -1,6 +1,6 @@
 import { AppComboBox } from "@/shared/components/app-combobox";
 import { AppSlider } from "@/shared/components/app-slider";
-import { Button } from "@base-ui/react";
+import { Button } from "@/shared/ui/button";
 import { useState } from "react";
 
 export default function EmployeeFilters() {
