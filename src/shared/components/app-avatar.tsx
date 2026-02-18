@@ -9,7 +9,7 @@ type AppAvatarProps = {
   className?: string;
 };
 
-export default function AppAvatar({
+export function AppAvatar({
   src,
   alt,
   fallback,
