@@ -4,7 +4,6 @@ import { DEPARTMENT_OPTIONS, STATUS_OPTIONS } from "../constants";
 
 import type { ComboBoxItem } from "@/shared/components";
 
-//delay function
 function delay(time: number) {
   return new Promise<void>((res) => {
     setTimeout(() => {

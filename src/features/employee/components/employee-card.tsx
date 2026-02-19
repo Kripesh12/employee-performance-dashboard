@@ -1,10 +1,12 @@
-import { AppAvatar } from "@/shared/components/app-avatar";
-import { AppButton } from "@/shared/components/app-button";
-import { AppDepartmentBadge } from "@/shared/components/app-department-badge";
-import { AppStarRating } from "@/shared/components/app-star-rating";
+import {
+  AppAvatar,
+  AppButton,
+  AppDepartmentBadge,
+  AppPerformanceBadge,
+  AppStarRating,
+} from "@/shared/components";
+import type { Employee } from "../types";
 import { Card } from "@/shared/ui/card";
-import type { Employee } from "../types/employee";
-import { AppPerformanceBadge } from "@/shared/components";
 
 interface EmployeeCardProps {
   employee: Employee;

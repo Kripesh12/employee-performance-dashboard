@@ -11,3 +11,10 @@ export interface Employee {
   status: EmployeeStatus;
   joiningDate: string;
 }
+
+export type EmployeeFilters = {
+  search: string;
+  department: string | null;
+  status: string | null;
+  performanceScore: [number, number];
+};
