@@ -1,27 +1,74 @@
-import { useEmployees } from "../hooks/use-employees";
-import type { Employee } from "../types";
-import EmployeeCard from "./employee-card";
+import { useFilteredEmployees } from "../hooks/ui/use-employee-filter";
+import { usePagination } from "../hooks/ui/use-pagination";
+import { EmployeeCard } from "./employee-card";
+import { EmployeeEmptyState } from "./employee-empty-state";
 import { EmployeeErrorState } from "./employee-error";
+import { EmployeePagination } from "./employee-pagination";
+import { EmployeeResultCount } from "./employee-result-count";
 import { EmployeeListLoading } from "./employee-skeleton";
 
-export default function EmployeeList() {
-  const { data, error, isLoading, refetch } = useEmployees();
+const ITEMS_PER_PAGE = 8;
 
-  function onEdit(id: string) {
+export default function EmployeeList() {
+  const { filtered, isLoading, isError, total } = useFilteredEmployees();
+
+  const {
+    currentPage,
+    totalPages,
+    startIndex,
+    endIndex,
+    nextPage,
+    prevPage,
+    goToPage,
+    hasNextPage,
+    hasPrevPage,
+  } = usePagination({
+    totalItems: filtered.length,
+    itemsPerPage: ITEMS_PER_PAGE,
+  });
+
+  const paginated = filtered.slice(startIndex, endIndex);
+
+  const handleEdit = (id: string) => {
     console.log(id);
-  }
+  };
 
   if (isLoading) return <EmployeeListLoading />;
-
-  if (error) return <EmployeeErrorState onRetry={refetch} />;
-
-  if (!data?.length) return <div>No employees found</div>;
+  if (isError) return <EmployeeErrorState />;
+  if (!filtered.length) return <EmployeeEmptyState />;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {data.map((employee: Employee) => (
-        <EmployeeCard key={employee.id} employee={employee} onEdit={onEdit} />
-      ))}
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {paginated.map((employee) => (
+          <EmployeeCard
+            key={employee.id}
+            employee={employee}
+            onEdit={handleEdit}
+          />
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between p-4 rounded-2xl mt-2 bg-white">
+        <EmployeeResultCount
+          shown={paginated.length}
+          total={total}
+          from={startIndex + 1}
+          to={Math.min(endIndex, filtered.length)}
+        />
+
+        {totalPages > 1 && (
+          <EmployeePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            hasNextPage={hasNextPage}
+            hasPrevPage={hasPrevPage}
+            onNext={nextPage}
+            onPrev={prevPage}
+            onPageChange={goToPage}
+          />
+        )}
+      </div>
     </div>
   );
 }

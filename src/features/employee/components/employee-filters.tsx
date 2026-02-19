@@ -1,63 +1,100 @@
-import { AppComboBox } from "@/shared/components/app-combobox";
-import { AppSlider } from "@/shared/components/app-slider";
-import { useState } from "react";
-import {
-  DEPARTMENT_OPTIONS,
-  STATUS_OPTIONS,
-  SORT_OPTIONS,
-} from "../constants/filter-options";
-import { DEFAULT_FILTERS, type FilterState } from "../types/employee-filters";
-import { AppButton } from "@/shared/components";
+import { AppComboBox, AppSlider, AppButton } from "@/shared/components";
 import { FaFilter } from "react-icons/fa";
 
-interface EmployeeFiltersProps {
-  onApply: (filters: FilterState) => void;
-  onReset?: () => void;
-}
+import {
+  useFilterActions,
+  useFilterDepartment,
+  useFilterScore,
+  useFilterSortBy,
+  useFilterStatus,
+} from "../store/employee-filter-store";
 
-export default function EmployeeFilters({ onApply }: EmployeeFiltersProps) {
-  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
+import {
+  useDepartmentOptions,
+  useSortOptions,
+  useStatusOptions,
+} from "../hooks/api/use-employee-options";
 
-  function updateFilter(key: string, value: unknown) {
-    setFilters((prev) => ({ ...prev, [key]: value }));
+import type { SortBy } from "../types";
+import { useState } from "react";
+
+export default function EmployeeFilters() {
+  const { setDepartment, setStatus, setPerformanceScore, setSortBy } =
+    useFilterActions();
+
+  const department = useFilterDepartment();
+  const status = useFilterStatus();
+  const score = useFilterScore();
+  const sortBy = useFilterSortBy();
+
+  const { data: departments, isLoading: loadingDepts } = useDepartmentOptions();
+  const { data: statuses, isLoading: loadingStatuses } = useStatusOptions();
+  const { data: sortOptions, isLoading: loadingSort } = useSortOptions();
+
+  //local state for apply filter button
+  const [filter, setFilter] = useState({
+    department,
+    status,
+    score,
+    sortBy,
+  });
+
+  function handleApply() {
+    setDepartment(filter.department);
+    setStatus(filter.status);
+    setPerformanceScore(filter.score);
+    setSortBy(filter.sortBy as SortBy | null);
   }
 
   return (
-    <div className="flex justify-around bg-white p-6 rounded-2xl">
-      <AppComboBox
-        label="Department"
-        data={DEPARTMENT_OPTIONS}
-        value={filters.department}
-        onChange={(val) => updateFilter("department", val)}
-      />
+    <div className="bg-white p-4 rounded-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <AppComboBox
+          label="Department"
+          data={departments ?? []}
+          value={filter.department ?? ""}
+          isLoading={loadingDepts}
+          onChange={(val) =>
+            setFilter((prev) => ({ ...prev, department: val }))
+          }
+        />
 
-      <AppComboBox
-        label="Status"
-        data={STATUS_OPTIONS}
-        value={filters.status}
-        onChange={(val) => updateFilter("status", val)}
-      />
+        <AppComboBox
+          label="Status"
+          data={statuses ?? []}
+          value={filter.status ?? ""}
+          isLoading={loadingStatuses}
+          onChange={(val) => setFilter((prev) => ({ ...prev, status: val }))}
+        />
 
-      <AppSlider
-        label="Performance Score"
-        min={0}
-        max={5}
-        value={filters.performanceScore}
-        onChange={(val) =>
-          updateFilter("performanceScore", val as [number, number])
-        }
-      />
+        <AppSlider
+          label="Performance Score"
+          min={0}
+          max={5}
+          value={filter.score}
+          onChange={(val) => setFilter((prev) => ({ ...prev, score: val }))}
+        />
 
-      <AppComboBox
-        label="Sort By"
-        data={SORT_OPTIONS}
-        value={filters.sortBy}
-        onChange={(val) => updateFilter("sortBy", val)}
-      />
+        <AppComboBox
+          label="Sort By"
+          data={sortOptions ?? []}
+          value={filter.sortBy}
+          onChange={(val) =>
+            setFilter((prev) => ({ ...prev, sortBy: val as SortBy | null }))
+          }
+          isLoading={loadingSort}
+        />
 
-      <AppButton onClick={() => onApply(filters)} leftIcon={<FaFilter />}>
-        Apply Filters
-      </AppButton>
+        <div className="flex justify-end mt-4">
+          <AppButton
+            leftIcon={<FaFilter />}
+            className="w-full sm:w-auto"
+            onClick={handleApply}
+          >
+            Apply Filters
+          </AppButton>
+        </div>
+      </div>
     </div>
   );
 }

@@ -44,7 +44,7 @@ function EmployeeStats({ employee }: { employee: Employee }) {
   );
 }
 
-export default function EmployeeCard({ employee, onEdit }: EmployeeCardProps) {
+export function EmployeeCard({ employee, onEdit }: EmployeeCardProps) {
   return (
     <Card className="p-3 ">
       <EmployeeHeader employee={employee} />

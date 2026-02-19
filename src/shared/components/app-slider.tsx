@@ -4,20 +4,18 @@ import { cn } from "@/lib/utils";
 
 interface AppSliderProps {
   label?: string;
-  value?: number[];
-  defaultValue?: number[];
+  value?: number;
   min?: number;
   max?: number;
   step?: number;
   disabled?: boolean;
-  onChange?: (value: number[]) => void;
+  onChange?: (value: number) => void;
   className?: string;
 }
 
 export function AppSlider({
   label,
   value,
-  defaultValue,
   min = 0,
   max = 100,
   step = 1,
@@ -26,19 +24,21 @@ export function AppSlider({
   className,
 }: AppSliderProps) {
   return (
-    <div className={cn("space-y-2 w-full max-w-xs", className)}>
-      <div className="flex justify-between items-center">
-        {label && <Label>{label}</Label>}
-      </div>
+    <div className={cn("space-y-2 w-full ", className)}>
+      {label && (
+        <div className="flex justify-between items-center">
+          <Label>{label}</Label>
+          <span className="text-lg font-bold text-primary">{value ?? min}</span>
+        </div>
+      )}
 
       <Slider
-        value={value}
-        defaultValue={defaultValue}
+        value={value !== undefined ? [value] : undefined}
         min={min}
         max={max}
         step={step}
         disabled={disabled}
-        onValueChange={onChange}
+        onValueChange={([val]) => onChange?.(val)}
       />
     </div>
   );

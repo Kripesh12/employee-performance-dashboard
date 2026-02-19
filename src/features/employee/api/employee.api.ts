@@ -1,6 +1,6 @@
 import type { Employee } from "../types";
 import { MOCK_EMPLOYEES } from "../mocks/employees";
-import { DEPARTMENT_OPTIONS, STATUS_OPTIONS } from "../constants";
+import { DEPARTMENT_OPTIONS, SORT_OPTIONS, STATUS_OPTIONS } from "../constants";
 
 import type { ComboBoxItem } from "@/shared/components";
 
@@ -18,11 +18,16 @@ export async function fetchEmployees(): Promise<Employee[]> {
 }
 
 export async function fetchDepartmentOptions(): Promise<ComboBoxItem[]> {
-  await delay(500);
+  await delay(300);
   return DEPARTMENT_OPTIONS;
 }
 
 export async function fetchStatusOptions(): Promise<ComboBoxItem[]> {
-  await delay(500);
+  await delay(300);
   return STATUS_OPTIONS;
+}
+
+export async function fetchSortOptions(): Promise<ComboBoxItem[]> {
+  await delay(300);
+  return SORT_OPTIONS;
 }

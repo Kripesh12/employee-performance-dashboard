@@ -5,10 +5,11 @@ export const DEPARTMENT_OPTIONS: ComboBoxItem[] = [
   { label: "HR", value: "hr" },
   { label: "Sales", value: "sales" },
   { label: "Finance", value: "finance" },
-  { label: "All Department", value: "all" },
+  { label: "All Department", value: "" },
 ];
 
 export const STATUS_OPTIONS: ComboBoxItem[] = [
+  { label: "All Statuses", value: "" },
   { label: "Active", value: "active" },
   { label: "On Leave", value: "on_leave" },
   { label: "Resigned", value: "resigned" },

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchEmployees } from "../api/employee.api";
-import { employeeKeys } from "../api/employee.keys";
+import { fetchEmployees } from "../../api/employee.api";
+import { employeeKeys } from "../../api/employee.keys";
 
 export function useEmployees() {
   return useQuery({

@@ -1,11 +1,13 @@
 import { create } from "zustand";
-import type { EmployeeFilters } from "../types";
+import type { EmployeeFilters, SortBy } from "../types";
+import { useShallow } from "zustand/react/shallow";
 
 type FilterActions = {
   setSearch: (value: string) => void;
   setDepartment: (value: string | null) => void;
   setStatus: (value: string | null) => void;
-  setPerformanceScore: (value: [number, number]) => void;
+  setPerformanceScore: (value: number) => void;
+  setSortBy: (value: SortBy | null) => void;
   resetFilters: () => void;
 };
 
@@ -13,7 +15,8 @@ export const DEFAULT_FILTERS: EmployeeFilters = {
   search: "",
   department: null,
   status: null,
-  performanceScore: [0, 5],
+  performanceScore: 3,
+  sortBy: null,
 };
 
 export const useEmployeeFilterStore = create<EmployeeFilters & FilterActions>(
@@ -23,6 +26,7 @@ export const useEmployeeFilterStore = create<EmployeeFilters & FilterActions>(
     setDepartment: (value) => set({ department: value }),
     setStatus: (value) => set({ status: value }),
     setPerformanceScore: (value) => set({ performanceScore: value }),
+    setSortBy: (value) => set({ sortBy: value }),
     resetFilters: () => set(DEFAULT_FILTERS),
   }),
 );
@@ -36,13 +40,17 @@ export const useFilterDepartment = () =>
 export const useFilterStatus = () => useEmployeeFilterStore((s) => s.status);
 export const useFilterScore = () =>
   useEmployeeFilterStore((s) => s.performanceScore);
+export const useFilterSortBy = () => useEmployeeFilterStore((s) => s.sortBy);
 
 //writing states
 export const useFilterActions = () =>
-  useEmployeeFilterStore((s) => ({
-    setSearch: s.setSearch,
-    setDepartment: s.setDepartment,
-    setStatus: s.setStatus,
-    setPerformanceScore: s.setPerformanceScore,
-    resetFilters: s.resetFilters,
-  }));
+  useEmployeeFilterStore(
+    useShallow((s) => ({
+      setSearch: s.setSearch,
+      setDepartment: s.setDepartment,
+      setStatus: s.setStatus,
+      setPerformanceScore: s.setPerformanceScore,
+      setSortBy: s.setSortBy,
+      resetFilters: s.resetFilters,
+    })),
+  );
