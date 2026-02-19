@@ -10,7 +10,7 @@ import { Card } from "@/shared/ui/card";
 
 interface EmployeeCardProps {
   employee: Employee;
-  onEdit: (id: string) => void;
+  onEdit: (employee: Employee) => void;
 }
 
 function EmployeeHeader({ employee }: { employee: Employee }) {
@@ -53,7 +53,7 @@ export function EmployeeCard({ employee, onEdit }: EmployeeCardProps) {
       <AppButton
         variant="secondary"
         className="w-full"
-        onClick={() => onEdit(employee.id)}
+        onClick={() => onEdit(employee)}
       >
         Edit Employee
       </AppButton>

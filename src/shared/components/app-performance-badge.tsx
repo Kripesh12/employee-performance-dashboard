@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Badge } from "../ui/badge";
 
 type BadgeStatus = "EXCEEDING" | "MEETING" | "NEEDS IMPROVEMENT" | "IN REVIEW";

@@ -4,11 +4,11 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-  SheetFooter,
 } from "@/shared/ui/sheet";
-import { Input } from "@/shared/ui/input";
-import { Label } from "@/shared/ui/label";
-import { Button } from "@/shared/ui/button";
+
+import { AddEmployeeForm } from "./add-employee-form";
+import type { EmployeeFormValues } from "../schema/add-employee-schema";
+import { useSaveEmployee } from "../hooks/api/use-save-employee";
 
 type AddEmployeeDrawerProps = {
   open: boolean;
@@ -19,6 +19,13 @@ export function AddEmployeeDrawer({
   open,
   onOpenChange,
 }: AddEmployeeDrawerProps) {
+  const { mutate: saveEmployee, isPending } = useSaveEmployee();
+
+  function handleSubmit(values: EmployeeFormValues) {
+    saveEmployee(values, {
+      onSuccess: () => onOpenChange(false),
+    });
+  }
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-100 sm:w-125">
@@ -28,29 +35,12 @@ export function AddEmployeeDrawer({
         </SheetHeader>
 
         <div className="space-y-4 py-6">
-          <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
-            <Input id="name" placeholder="John Doe" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="john@example.com" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="department">Department</Label>
-            <Input id="department" placeholder="Engineering" />
-          </div>
+          <AddEmployeeForm
+            onSubmit={handleSubmit}
+            onCancel={() => onOpenChange(false)}
+            isSubmitting={isPending}
+          />
         </div>
-
-        <SheetFooter className="gap-2">
-          <Button variant="secondary" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-
-          <Button>Save Employee</Button>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

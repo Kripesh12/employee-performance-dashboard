@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Input } from "@/shared/ui/input";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface AppInputProps extends React.ComponentProps<"input"> {
   leftIcon?: React.ReactNode;

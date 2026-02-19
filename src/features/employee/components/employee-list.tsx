@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFilteredEmployees } from "../hooks/ui/use-employee-filter";
 import { usePagination } from "../hooks/ui/use-pagination";
 import { EmployeeCard } from "./employee-card";
@@ -6,11 +7,16 @@ import { EmployeeErrorState } from "./employee-error";
 import { EmployeePagination } from "./employee-pagination";
 import { EmployeeResultCount } from "./employee-result-count";
 import { EmployeeListLoading } from "./employee-skeleton";
+import { EditEmployeeDrawer } from "./edit-employee-drawer";
+import type { Employee } from "../types";
 
 const ITEMS_PER_PAGE = 8;
 
 export default function EmployeeList() {
   const { filtered, isLoading, isError, total } = useFilteredEmployees();
+
+  const [editTarget, setEditTarget] = useState<Employee | null>(null);
+  const [editOpen, setEditOpen] = useState(false);
 
   const {
     currentPage,
@@ -29,9 +35,15 @@ export default function EmployeeList() {
 
   const paginated = filtered.slice(startIndex, endIndex);
 
-  const handleEdit = (id: string) => {
-    console.log(id);
-  };
+  function handleEdit(employee: Employee) {
+    setEditTarget(employee);
+    setEditOpen(true);
+  }
+
+  function handleEditClose(open: boolean) {
+    setEditOpen(open);
+    if (!open) setEditTarget(null);
+  }
 
   if (isLoading) return <EmployeeListLoading />;
   if (isError) return <EmployeeErrorState />;
@@ -69,6 +81,12 @@ export default function EmployeeList() {
           />
         )}
       </div>
+
+      <EditEmployeeDrawer
+        open={editOpen}
+        onOpenChange={handleEditClose}
+        employee={editTarget}
+      />
     </div>
   );
 }

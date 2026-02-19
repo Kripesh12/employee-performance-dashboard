@@ -1,13 +1,11 @@
 import { AddEmployeeButton } from "@/features/employee/components/add-employee-button";
+import { useFilterActions } from "@/features/employee/store/employee-filter-store";
 import { BrandMark } from "@/shared/components/app-brandmark";
 import { AppInput } from "@/shared/components/app-input";
 import { IoIosSearch } from "react-icons/io";
 
-interface TopBarProps {
-  onSearch: (query: string) => void;
-}
-
-export default function TopBar({ onSearch }: TopBarProps) {
+export default function TopBar() {
+  const { setSearch } = useFilterActions();
   return (
     <div className="flex justify-between p-4 bg-white">
       <BrandMark />
@@ -16,7 +14,7 @@ export default function TopBar({ onSearch }: TopBarProps) {
         <AppInput
           leftIcon={<IoIosSearch />}
           placeholder="Search employees..."
-          onChange={(e) => onSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
     </div>

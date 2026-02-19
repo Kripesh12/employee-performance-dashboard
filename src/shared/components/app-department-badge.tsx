@@ -1,5 +1,5 @@
 import { Badge } from "../ui/badge";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 type Department = "Engineering" | "HR" | "Sales" | "Finance";
 

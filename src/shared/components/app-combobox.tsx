@@ -7,7 +7,7 @@ import {
   ComboboxList,
 } from "@/shared/ui/combobox";
 import { Label } from "../ui/label";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 export type ComboBoxItem = {
   label: string;

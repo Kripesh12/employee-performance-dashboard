@@ -1,8 +1,12 @@
 import { useMemo } from "react";
 import type { Employee, EmployeeFilters, SortBy } from "../../types";
 import { useEmployees } from "../api/use-employees";
-import { useEmployeeFilterStore } from "../../store/employee-filter-store";
+import {
+  useEmployeeFilterStore,
+  useFilterSearch,
+} from "../../store/employee-filter-store";
 import { useShallow } from "zustand/react/shallow";
+import { useDebounce } from "@/shared/hooks/use-debounce";
 
 function matchesSearch(employee: Employee, search: string): boolean {
   if (!search) return true;
@@ -87,10 +91,13 @@ export function useFilteredEmployees() {
     })),
   );
 
+  const search = useFilterSearch();
+  const debouncedSearch = useDebounce(search, 300);
+
   //caching
   const filtered = useMemo(
-    () => filterEmployees(employees, filters),
-    [employees, filters],
+    () => filterEmployees(employees, { ...filters, search: debouncedSearch }),
+    [employees, filters, debouncedSearch],
   );
 
   return {
