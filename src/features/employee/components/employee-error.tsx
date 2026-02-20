@@ -1,5 +1,6 @@
 import { AlertTriangle, RefreshCw } from "lucide-react";
-import { Card, CardContent } from "@/shared/ui/card";
+
+import { Card, CardContent } from "@/shared/ui";
 import { AppButton } from "@/shared/components";
 
 interface ErrorStateProps {

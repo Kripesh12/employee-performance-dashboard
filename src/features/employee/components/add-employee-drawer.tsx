@@ -4,11 +4,11 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/shared/ui/sheet";
+} from "@/shared/ui";
 
-import { AddEmployeeForm } from "./add-employee-form";
-import type { EmployeeFormValues } from "../schema/add-employee-schema";
-import { useSaveEmployee } from "../hooks/api/use-save-employee";
+import { AddEmployeeForm } from "./";
+import type { EmployeeFormValues } from "../schema";
+import { useSaveEmployee } from "../hooks";
 
 type AddEmployeeDrawerProps = {
   open: boolean;

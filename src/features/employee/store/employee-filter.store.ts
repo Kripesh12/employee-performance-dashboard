@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import type { EmployeeFilters, SortBy } from "../types";
 import { useShallow } from "zustand/react/shallow";
+
+import type { EmployeeFilters, SortBy } from "../types";
 
 type FilterActions = {
   setSearch: (value: string) => void;

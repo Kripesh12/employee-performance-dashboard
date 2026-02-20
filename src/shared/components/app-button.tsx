@@ -1,7 +1,9 @@
-import { Button } from "@/shared/ui/button";
-import { type ReactNode, type ButtonHTMLAttributes } from "react";
-import { FaSpinner } from "react-icons/fa";
+import type { ReactNode, ButtonHTMLAttributes } from "react";
+
+import { Button } from "@/shared/ui";
 import { cn } from "@/shared/lib/utils";
+
+import { FaSpinner } from "react-icons/fa";
 
 type ButtonVariant =
   | "link"

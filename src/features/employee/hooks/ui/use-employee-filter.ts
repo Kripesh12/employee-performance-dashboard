@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import type { Employee, EmployeeFilters, SortBy } from "../../types";
-import { useEmployees } from "../api/use-employees";
-import {
-  useEmployeeFilterStore,
-  useFilterSearch,
-} from "../../store/employee-filter-store";
 import { useShallow } from "zustand/react/shallow";
-import { useDebounce } from "@/shared/hooks/use-debounce";
+
+import type { Employee, EmployeeFilters, SortBy } from "../../types";
+
+import { useEmployees } from "../api";
+import { useEmployeeFilterStore, useFilterSearch } from "../../store";
+
+import { useDebounce } from "@/shared/hooks";
 
 function matchesSearch(employee: Employee, search: string): boolean {
   if (!search) return true;

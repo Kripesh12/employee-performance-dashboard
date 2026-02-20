@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateEmployee } from "../../api/employee.api";
-import { DEPARTMENT_MAP, STATUS_MAP } from "../../constants";
-import type { EmployeeFormValues } from "../../schema/add-employee-schema";
-import type { Employee } from "../../types";
-import { employeeKeys } from "../../api/employee.keys";
 import { toast } from "sonner";
+
+import type { EmployeeFormValues } from "../../schema";
+import type { Employee } from "../../types";
+
+import { updateEmployee, employeeKeys } from "../../api";
+
+import { DEPARTMENT_MAP, STATUS_MAP } from "../../constants";
 
 function buildUpdatePayload(id: string, values: EmployeeFormValues): Employee {
   return {

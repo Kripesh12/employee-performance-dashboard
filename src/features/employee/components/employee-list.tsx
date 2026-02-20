@@ -1,22 +1,32 @@
-import { useState } from "react";
-import { useFilteredEmployees } from "../hooks/ui/use-employee-filter";
-import { usePagination } from "../hooks/ui/use-pagination";
-import { EmployeeCard } from "./employee-card";
-import { EmployeeEmptyState } from "./employee-empty-state";
-import { EmployeeErrorState } from "./employee-error";
-import { EmployeePagination } from "./employee-pagination";
-import { EmployeeResultCount } from "./employee-result-count";
-import { EmployeeListLoading } from "./employee-skeleton";
-import { EditEmployeeDrawer } from "./edit-employee-drawer";
-import type { Employee } from "../types";
+import { usePagination, useFilteredEmployees } from "../hooks";
+
+import {
+  useEditingEmployee,
+  useIsAddDrawerOpen,
+  useIsEditDrawerOpen,
+  useUIActions,
+} from "../store";
+
+import {
+  EmployeeCard,
+  EmployeeEmptyState,
+  EmployeeErrorState,
+  EmployeePagination,
+  EmployeeResultCount,
+  EmployeeListLoading,
+  EditEmployeeDrawer,
+  AddEmployeeDrawer,
+} from "./";
 
 const ITEMS_PER_PAGE = 8;
 
 export default function EmployeeList() {
   const { filtered, isLoading, isError, total } = useFilteredEmployees();
 
-  const [editTarget, setEditTarget] = useState<Employee | null>(null);
-  const [editOpen, setEditOpen] = useState(false);
+  const isAddDrawerOpen = useIsAddDrawerOpen();
+  const isEditDrawerOpen = useIsEditDrawerOpen();
+  const editingEmployee = useEditingEmployee();
+  const { closeAddDrawer, openEditDrawer, closeEditDrawer } = useUIActions();
 
   const {
     currentPage,
@@ -35,16 +45,6 @@ export default function EmployeeList() {
 
   const paginated = filtered.slice(startIndex, endIndex);
 
-  function handleEdit(employee: Employee) {
-    setEditTarget(employee);
-    setEditOpen(true);
-  }
-
-  function handleEditClose(open: boolean) {
-    setEditOpen(open);
-    if (!open) setEditTarget(null);
-  }
-
   if (isLoading) return <EmployeeListLoading />;
   if (isError) return <EmployeeErrorState />;
   if (!filtered.length) return <EmployeeEmptyState />;
@@ -56,7 +56,7 @@ export default function EmployeeList() {
           <EmployeeCard
             key={employee.id}
             employee={employee}
-            onEdit={handleEdit}
+            onEdit={openEditDrawer}
           />
         ))}
       </div>
@@ -82,10 +82,15 @@ export default function EmployeeList() {
         )}
       </div>
 
+      <AddEmployeeDrawer
+        open={isAddDrawerOpen}
+        onOpenChange={(open) => !open && closeAddDrawer()}
+      />
+
       <EditEmployeeDrawer
-        open={editOpen}
-        onOpenChange={handleEditClose}
-        employee={editTarget}
+        open={isEditDrawerOpen}
+        onOpenChange={(open) => !open && closeEditDrawer()}
+        employee={editingEmployee}
       />
     </div>
   );

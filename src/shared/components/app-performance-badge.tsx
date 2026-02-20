@@ -1,5 +1,5 @@
-import { cn } from "@/shared/lib/utils";
-import { Badge } from "../ui/badge";
+import { cn } from "@/shared/lib";
+import { Badge } from "../ui";
 
 type BadgeStatus = "EXCEEDING" | "MEETING" | "NEEDS IMPROVEMENT" | "IN REVIEW";
 

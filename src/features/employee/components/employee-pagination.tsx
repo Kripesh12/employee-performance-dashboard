@@ -6,7 +6,7 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from "@/shared/ui/pagination";
+} from "@/shared/ui";
 
 interface EmployeePaginationProps {
   currentPage: number;

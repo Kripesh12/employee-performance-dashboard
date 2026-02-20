@@ -1,5 +1,4 @@
-import { Card } from "@/shared/ui/card";
-import { Skeleton } from "@/shared/ui/skeleton";
+import { Skeleton, Card } from "@/shared/ui";
 
 function EmployeeCardSkeleton() {
   return (

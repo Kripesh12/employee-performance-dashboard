@@ -4,8 +4,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { AppField } from "./app-field";
+} from "../ui";
+
+import { AppField } from "./";
 
 interface AppSelectFieldProps {
   name: string;

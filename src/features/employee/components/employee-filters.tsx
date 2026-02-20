@@ -1,5 +1,7 @@
-import { AppComboBox, AppSlider, AppButton } from "@/shared/components";
-import { FaFilter } from "react-icons/fa";
+import { useState } from "react";
+import { IoFilter } from "react-icons/io5";
+
+import type { SortBy } from "../types";
 
 import {
   useFilterActions,
@@ -7,16 +9,15 @@ import {
   useFilterScore,
   useFilterSortBy,
   useFilterStatus,
-} from "../store/employee-filter-store";
+} from "../store";
 
 import {
   useDepartmentOptions,
   useSortOptions,
   useStatusOptions,
-} from "../hooks/api/use-employee-options";
+} from "../hooks";
 
-import type { SortBy } from "../types";
-import { useState } from "react";
+import { AppComboBox, AppSlider, AppButton } from "@/shared/components";
 
 export default function EmployeeFilters() {
   const { setDepartment, setStatus, setPerformanceScore, setSortBy } =
@@ -87,7 +88,7 @@ export default function EmployeeFilters() {
 
         <div className="flex justify-end mt-4">
           <AppButton
-            leftIcon={<FaFilter />}
+            leftIcon={<IoFilter />}
             className="w-full sm:w-auto"
             onClick={handleApply}
           >

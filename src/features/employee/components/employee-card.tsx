@@ -1,3 +1,5 @@
+import type { Employee } from "../types";
+
 import {
   AppAvatar,
   AppButton,
@@ -5,8 +7,7 @@ import {
   AppPerformanceBadge,
   AppStarRating,
 } from "@/shared/components";
-import type { Employee } from "../types";
-import { Card } from "@/shared/ui/card";
+import { Card } from "@/shared/ui";
 
 interface EmployeeCardProps {
   employee: Employee;
@@ -16,7 +17,7 @@ interface EmployeeCardProps {
 function EmployeeHeader({ employee }: { employee: Employee }) {
   return (
     <div className="flex justify-between items-center">
-      <AppAvatar size="lg" alt={employee.name} />
+      <AppAvatar src="/user-icon.webp" size="lg" alt={employee.name} />
       <AppPerformanceBadge performanceScore={employee.performanceScore} />
     </div>
   );

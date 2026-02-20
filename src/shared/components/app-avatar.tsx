@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
+import { Avatar, AvatarFallback, AvatarImage } from "../ui";
 
 type AppAvatarProps = {
   src?: string;

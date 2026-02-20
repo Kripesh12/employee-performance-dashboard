@@ -1,22 +1,17 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { FaRegUser } from "react-icons/fa";
 import { GrDocumentPerformance } from "react-icons/gr";
 import { GoGear } from "react-icons/go";
 
-import {
-  employeeSchema,
-  type EmployeeFormValues,
-} from "../schema/add-employee-schema";
-
-import {
-  useDepartmentOptions,
-  useStatusOptions,
-} from "../hooks/api/use-employee-options";
-
-import { Input } from "@/shared/ui/input";
-import { AppField, AppSelectField, AppButton } from "@/shared/components";
+import { employeeSchema, type EmployeeFormValues } from "../schema";
 import type { Employee } from "../types";
+import { useDepartmentOptions, useStatusOptions } from "../hooks";
+
+import { Input } from "@/shared/ui";
+import { AppField, AppSelectField, AppButton } from "@/shared/components";
+
 import { toFormValue } from "@/shared/lib/utils";
 
 interface EmployeeFormProps {
@@ -155,7 +150,11 @@ export function AddEmployeeForm({
           </AppButton>
 
           <AppButton type="submit" form="employee-form" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save Employee"}
+            {isSubmitting
+              ? "Saving..."
+              : employee
+                ? "Edit Employee"
+                : "Save Employee"}
           </AppButton>
         </div>
       </form>

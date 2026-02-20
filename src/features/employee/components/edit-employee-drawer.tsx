@@ -1,14 +1,17 @@
+import type { Employee } from "../types";
+import type { EmployeeFormValues } from "../schema";
+
+import { useUpdateEmployee } from "../hooks";
+
+import { AddEmployeeForm } from "./add-employee-form";
+
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/shared/ui/sheet";
-import { AddEmployeeForm } from "./add-employee-form";
-import type { Employee } from "../types";
-import type { EmployeeFormValues } from "../schema/add-employee-schema";
-import { useUpdateEmployee } from "../hooks/api/use-update-employee";
+} from "@/shared/ui";
 
 interface EditEmployeeDrawerProps {
   open: boolean;

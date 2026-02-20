@@ -4,7 +4,7 @@ import {
   type ControllerRenderProps,
 } from "react-hook-form";
 
-import { Field, FieldError, FieldLabel } from "@/shared/ui/field";
+import { Field, FieldError, FieldLabel } from "@/shared/ui/";
 
 interface AppFieldProps {
   name: string;

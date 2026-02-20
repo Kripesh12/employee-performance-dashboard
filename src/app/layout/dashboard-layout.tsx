@@ -8,7 +8,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="min-h-screen bg-gray-200 dark:bg-gray-900 flex flex-col">
+    <div className="min-h-screen bg-gray-200  flex flex-col">
       <TopBar />
       <main className="flex-1 p-6 overflow-auto">{children}</main>
       <Footer />

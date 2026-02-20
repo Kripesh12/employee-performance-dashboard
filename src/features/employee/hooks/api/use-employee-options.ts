@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  employeeKeys,
   fetchDepartmentOptions,
   fetchSortOptions,
   fetchStatusOptions,
-} from "../../api/employee.api";
-import { employeeKeys } from "../../api/employee.keys";
+} from "../../api";
 
 export function useDepartmentOptions() {
   return useQuery({

@@ -7,7 +7,7 @@ export const employeeSchema = z.object({
     error: "Department is required",
   }),
   performanceScore: z.coerce
-    .number()
+    .number({ message: "Performance score is required" })
     .min(0, "Score must be at least 0")
     .max(5, "Score must be at most 5")
     .transform((val): number => val),
@@ -15,7 +15,13 @@ export const employeeSchema = z.object({
   status: z.enum(["active", "on_leave", "resigned"], {
     error: "Status is required",
   }),
-  joiningDate: z.string().min(1, "Joining date is required"),
+  joiningDate: z
+    .string()
+    .min(1, "Joining date is required")
+    .refine(
+      (val) => new Date(val) <= new Date(),
+      "Joining date cannot be in the future",
+    ),
 });
 
 export type EmployeeFormValues = z.infer<typeof employeeSchema>;

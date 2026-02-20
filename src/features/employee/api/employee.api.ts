@@ -1,5 +1,5 @@
 import type { Employee } from "../types";
-import { MOCK_EMPLOYEES } from "../mocks/employees";
+import { MOCK_EMPLOYEES } from "../mocks";
 import { DEPARTMENT_OPTIONS, SORT_OPTIONS, STATUS_OPTIONS } from "../constants";
 
 import type { ComboBoxItem } from "@/shared/components";

@@ -1,5 +1,5 @@
-import { Slider } from "@/shared/ui/slider";
-import { Label } from "@/shared/ui/label";
+import { Slider, Label } from "@/shared/ui";
+
 import { cn } from "@/shared/lib/utils";
 
 interface AppSliderProps {
