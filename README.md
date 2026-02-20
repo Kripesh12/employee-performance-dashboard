@@ -21,7 +21,7 @@ A production-grade React application for managing and visualising employee perfo
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/employee-dashboard.git
+git clone https://github.com/Kripesh12/employee-performance-dashboard.git
 cd employee-dashboard
 
 # Install dependencies
@@ -177,7 +177,7 @@ const filtered = useMemo(
 
 This makes filtered data not to be out of sync with the source.
 
-### 4. API Layer as a Seam
+### 4. API Layer
 
 All async functions live in `employee.api.ts`. They currently use localStorage + mock data, but the interface is identical to what a real API would look like:
 
